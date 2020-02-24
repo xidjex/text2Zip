@@ -8,8 +8,8 @@ export interface SerializationResult {
 }
 
 export enum Sides {
-  left = "0",
-  right = "1"
+  left = "1",
+  right = "0"
 }
 
 export class TreeNode implements INode {

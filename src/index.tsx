@@ -1,11 +1,35 @@
 import * as React from "react";
 import { render } from "react-dom";
+import Tree from 'react-tree-graph';
+import 'react-tree-graph/dist/style.css';
 import { Text2Zip } from "./Text2Zip";
+import { TreeNode } from "./TreeNode";
+
+const buildTree = (tree: TreeNode | null): any => {
+    if (!tree) {
+        return ;
+    }
+
+    if (tree.isLeaf) {
+        return {
+            name: `"${tree.value}"`
+        };
+    }
+
+    return {
+        name: 'node',
+        children: [
+            tree.left && buildTree(tree.left),
+            tree.right && buildTree(tree.right),
+        ]
+    };
+};
 
 class App extends React.Component {
   public readonly state = {
     data: null,
-    text: null
+    text: null,
+    tree: null
   };
 
   handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +60,7 @@ class App extends React.Component {
     const [file] = target.files;
 
     Text2Zip.decodeBlob(file).then(result => {
-      this.setState({ text: result, data: null });
+        this.setState({ text: result.text, data: null, tree: result.tree });
     });
   }
 
@@ -79,6 +103,14 @@ class App extends React.Component {
           accept="application/x-compress"
           onChange={this.handleZipChange}
         />
+          {
+              this.state.tree &&
+              <Tree
+                  data={buildTree(this.state.tree)}
+                  height={400}
+                  width={400}
+              />
+          }
       </div>
     );
   }

@@ -10,10 +10,10 @@ export class Text2Zip {
   static readonly binaryDataDivider = 255;
   private readonly _text: string;
   private _tree: TreeNode;
-  private _buffer: Buffer;
+  private _buffer: ArrayBuffer;
   private _encodedString: string;
 
-  constructor(text: string) {
+  constructor(text: string = '') {
     this._text = text;
   }
 
@@ -73,7 +73,7 @@ export class Text2Zip {
     return this;
   }
 
-  static decodeBuffer(arrayBuffer: ArrayBuffer): string {
+  static decodeBuffer(arrayBuffer: ArrayBuffer): Text2Zip {
     // Get bytes array from blob
     if (!arrayBuffer) {
       throw new Error("Blob was not presented");
@@ -104,12 +104,20 @@ export class Text2Zip {
       }
 
       return `${"0".repeat(8 - result.length)}${result}`;
-    });
+    }).join("");
 
-    return Text2Zip._encodedStringToText(encodedString.join(""), treeInstance);
+    const text = Text2Zip._encodedStringToText(encodedString, treeInstance);
+
+    const text2Zip = new Text2Zip(text);
+
+    text2Zip._tree = treeInstance;
+    text2Zip._encodedString = encodedString;
+    text2Zip._tree = treeInstance;
+
+    return text2Zip;
   }
 
-  static async decodeBlob(blob: Blob): Promise<string> {
+  static async decodeBlob(blob: Blob): Promise<Text2Zip> {
     // Get bytes array from blob
     if (!blob) {
       throw new Error("Blob was not presented");
