@@ -53,7 +53,7 @@ export class TreeNode implements INode {
   insert(node: INode): TreeNode {
     this._weight = 0;
 
-    let unusedSide = this._left ? "_right" : "_left";
+    let unusedSide = this._right ? "_left" : "_right";
 
     this[unusedSide] = this._getInstance(node);
 
@@ -82,7 +82,7 @@ export class TreeNode implements INode {
     };
   }
 
-  // Create treee instance from Serialization result object
+  // Create tree instance from Serialization result object
   static hydrate(structure: SerializationResult): TreeNode {
     let tree = new TreeNode();
 

@@ -12,9 +12,9 @@ export class TreeBuilder {
       throw new Error("Cannot create tree. Text is empty");
     }
 
-    const splittedText = text.split("");
+    const symbolsArray = text.split("");
 
-    const symbolsWeightObject: SymbolsWeightObject = splittedText.reduce(
+    const symbolsWeightObject: SymbolsWeightObject = symbolsArray.reduce(
       (acc, symbol) => {
         acc[symbol] = acc[symbol] ? acc[symbol] + 1 : 1;
 

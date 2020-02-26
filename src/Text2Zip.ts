@@ -1,9 +1,7 @@
 import { TreeBuilder } from "./TreeBuilder";
 import { TreeNode } from "./TreeNode";
 
-// @ts-ignore
 declare var TextEncoder: any;
-// @ts-ignore
 declare var TextDecoder: any;
 
 export class Text2Zip {
@@ -79,7 +77,6 @@ export class Text2Zip {
       throw new Error("Blob was not presented");
     }
 
-    // @ts-ignore
     const dataArr = Array.from(new Uint8Array(arrayBuffer));
 
     // Get index of data divider of tree data and encoded data
@@ -123,7 +120,6 @@ export class Text2Zip {
       throw new Error("Blob was not presented");
     }
 
-    // @ts-ignore
     const arrayBuffer = await blob.arrayBuffer();
 
     return Text2Zip.decodeBuffer(arrayBuffer);
